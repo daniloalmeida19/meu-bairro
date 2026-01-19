@@ -1,64 +1,199 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Meu Bairro</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <div class="header-top">
-                <button class="menu-btn">☰</button>
-                <h1>Meu Bairro</h1>
-                <button class="chat-btn">💬</button>
-            </div>
-            <div class="header-login">
-                <input type="text" placeholder="E-mail ou celular" class="login-input">
-                <input type="password" placeholder="Senha" class="login-input">
-                <a href="#" class="forgot-password">Esqueci a senha</a>
-                <button class="register-btn">Cadastrar sua empresa</button>
-            </div>
-        </header>
+      <!-- Menu Lateral -->
+      <div class="side-menu">
+        <div class="side-menu-header">
+          <button class="close-menu-btn">×</button>
+        </div>
+        <div class="side-menu-content">
+          <a href="#" class="menu-item" id="register-category-link"
+            >Registrar Categorias</a
+          >
+        </div>
+      </div>
 
-        <main>
-            <div class="search-bar">
-                <input type="text" placeholder="🔍 Buscar">
-            </div>
+      <header>
+        <div class="header-top">
+          <button class="menu-btn">☰</button>
+          <h1>Meu Bairro</h1>
+          <button class="chat-btn">💬</button>
+        </div>
+        <div class="header-login">
+          <input
+            type="text"
+            placeholder="E-mail ou celular"
+            class="login-input"
+          />
+          <input type="password" placeholder="Senha" class="login-input" />
+          <a href="#" class="forgot-password">Esqueci a senha</a>
+          <button class="register-btn">Cadastrar sua empresa</button>
+        </div>
+      </header>
 
-            <div class="interactive-map">
-                <p>Mapa interativo</p>
-                <div class="map-placeholder">📍</div>
-            </div>
+      <main>
+        <div class="search-bar">
+          <input type="text" placeholder="🔍 Buscar" />
+        </div>
 
-            <div class="commerce-filters">
-                <button class="filter-btn">2km ao redor</button>
-                <!-- Botões de filtro serão inseridos aqui -->
-            </div>
+        <div class="interactive-map">
+          <p>Mapa interativo</p>
+          <div class="map-placeholder">📍</div>
+        </div>
 
-            <section class="local-commerce">
-                <h2>Comércio Local</h2>
-                <!-- Os comércios serão inseridos aqui pelo script.js -->
-            </section>
+        <div class="commerce-filters">
+          <button class="filter-btn">2km ao redor</button>
+          <!-- Botões de filtro serão inseridos aqui -->
+        </div>
 
-            <section class="community-posts">
-                <h2>Publicações da comunidade</h2>
-                <!-- As publicações serão inseridas aqui pelo script.js -->
-            </section>
-        </main>
+        <section class="local-commerce">
+          <h2>Comércio Local</h2>
+          <!-- Os comércios serão inseridos aqui pelo script.js -->
+        </section>
 
-        <footer>
-            <nav class="bottom-nav">
-                <a href="#" class="nav-item active">🏠</a>
-                <a href="#" class="nav-item">♡</a>
-                <a href="#" class="nav-item add-btn">+</a>
-                <a href="#" class="nav-item">🛍️</a>
-                <a href="#" class="nav-item">👤</a>
-            </nav>
-        </footer>
+        <section class="community-posts">
+          <h2>Publicações da comunidade</h2>
+          <!-- As publicações serão inseridas aqui pelo script.js -->
+        </section>
+      </main>
+
+      <footer>
+        <nav class="bottom-nav">
+          <a href="#" class="nav-item active">🏠</a>
+          <a href="#" class="nav-item">♡</a>
+          <a href="#" class="nav-item add-btn">+</a>
+          <a href="#" class="nav-item">🛍️</a>
+          <a href="#" class="nav-item">👤</a>
+        </nav>
+      </footer>
+
+      <!-- Página de Cadastro de Empresa (Inicialmente oculta) -->
+      <div id="business-registration-page" class="registration-page">
+        <div class="registration-header">
+          <button id="close-registration-btn">← Voltar</button>
+          <h2>Cadastrar Empresa</h2>
+        </div>
+        <form id="business-form">
+          <div class="form-group">
+            <label for="reg-email">E-mail (Login)</label>
+            <input
+              type="email"
+              id="reg-email"
+              placeholder="seu@email.com"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="reg-password">Senha</label>
+            <input
+              type="password"
+              id="reg-password"
+              placeholder="********"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="reg-confirm-password">Confirmar Senha</label>
+            <input
+              type="password"
+              id="reg-confirm-password"
+              placeholder="********"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="reg-category">Categoria</label>
+            <select id="reg-category" required>
+              <!-- Opções preenchidas via JS -->
+            </select>
+          </div>
+          <div
+            class="form-group"
+            id="custom-category-group"
+            style="display: none"
+          >
+            <label for="reg-custom-category">Qual categoria?</label>
+            <input
+              type="text"
+              id="reg-custom-category"
+              placeholder="Digite a nova categoria"
+            />
+          </div>
+          <div class="form-group">
+            <label for="reg-name">Empresa</label>
+            <input
+              type="text"
+              id="reg-name"
+              placeholder="Nome da empresa"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="reg-phone">Celular / WhatsApp</label>
+            <input
+              type="tel"
+              id="reg-phone"
+              placeholder="(00) 00000-0000"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="reg-commercial-phone">Telefone Comercial</label>
+            <input
+              type="tel"
+              id="reg-commercial-phone"
+              placeholder="(00) 0000-0000"
+            />
+          </div>
+          <div class="form-group">
+            <label for="reg-store">Loja</label>
+            <input
+              type="text"
+              id="reg-store"
+              placeholder="Número ou complemento"
+            />
+          </div>
+          <div class="form-group">
+            <label for="reg-street">Rua</label>
+            <input
+              type="text"
+              id="reg-street"
+              placeholder="Endereço"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="reg-zip">CEP</label>
+            <input type="text" id="reg-zip" placeholder="00000-000" required />
+          </div>
+          <button type="submit" class="submit-registration-btn">
+            Concluir Cadastro
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal de Cadastro de Categoria -->
+    <div id="category-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal-btn">&times;</span>
+        <h3>Nova Categoria</h3>
+        <input
+          type="text"
+          id="new-category-input"
+          placeholder="Digite o nome da categoria"
+        />
+        <button id="save-category-btn">Salvar</button>
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
