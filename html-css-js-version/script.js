@@ -226,11 +226,12 @@ document.addEventListener("DOMContentLoaded", () => {
     "close-registration-btn",
   );
   const businessForm = document.getElementById("business-form");
-  const regCategorySelect = document.getElementById("reg-category");
+  const regCategoryList = document.getElementById("reg-category-list");
   const regPhoneInput = document.getElementById("reg-phone");
   const regCommercialPhoneInput = document.getElementById(
     "reg-commercial-phone",
   );
+  const regNeighborhoodInput = document.getElementById("reg-neighborhood");
 
   // Máscara para telefone
   function maskPhone(e) {
@@ -260,38 +261,13 @@ document.addEventListener("DOMContentLoaded", () => {
       ...new Set([...requestedCategories, ...existingCategories]),
     ].sort();
 
-    regCategorySelect.innerHTML =
-      '<option value="">Selecione uma categoria</option>';
+    regCategoryList.innerHTML = "";
     categories.forEach((cat) => {
       const option = document.createElement("option");
       option.value = cat;
-      option.textContent = cat;
-      regCategorySelect.appendChild(option);
+      regCategoryList.appendChild(option);
     });
-
-    // Opção para outras categorias
-    const otherOption = document.createElement("option");
-    otherOption.value = "Outros";
-    otherOption.textContent = "Outros (Especificar)";
-    regCategorySelect.appendChild(otherOption);
   }
-
-  // Mostrar campo de categoria personalizada se "Outros" for selecionado
-  regCategorySelect.addEventListener("change", (e) => {
-    const customCategoryGroup = document.getElementById(
-      "custom-category-group",
-    );
-    const customCategoryInput = document.getElementById("reg-custom-category");
-
-    if (e.target.value === "Outros") {
-      customCategoryGroup.style.display = "flex";
-      customCategoryInput.required = true;
-    } else {
-      customCategoryGroup.style.display = "none";
-      customCategoryInput.required = false;
-      customCategoryInput.value = "";
-    }
-  });
 
   // Abrir página de cadastro
   registerBtn.addEventListener("click", () => {
