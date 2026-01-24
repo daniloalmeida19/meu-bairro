@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderBusinesses(businessesToRender) {
     localCommerceSection.innerHTML = "<h2>Comércio Local</h2>";
     businessesToRender.sort(
-      (a, b) => b.rating - a.rating || a.name.localeCompare(b.name),
+      (a, b) => b.rating - a.rating || a.name.localeCompare(b.name, "pt-BR"),
     );
     businessesToRender.forEach((business) => {
       const businessElement = document.createElement("div");
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <p class="business-type">${business.type}</p>
                     <div class="business-rating">
                         <span class="stars">${generateStars(business.rating)}</span>
-                        <span class="rating-value">${business.rating.toFixed(1)}</span>
+                        <span class="rating-value">${business.rating.toLocaleString("pt-BR", { minimumFractionDigits: 1 })}</span>
                     </div>
                 </div>
                 <h3 class="business-name">${business.name}</h3>
@@ -163,34 +163,11 @@ document.addEventListener("DOMContentLoaded", () => {
   setupFilters();
   renderBusinesses(businessesData);
 
-  // --- Lógica do Menu Lateral ---
-  const menuBtn = document.querySelector(".menu-btn");
-  const sideMenu = document.querySelector(".side-menu");
-  const closeMenuBtn = document.querySelector(".close-menu-btn");
-
-  menuBtn.addEventListener("click", () => {
-    sideMenu.classList.add("active");
-  });
-
-  closeMenuBtn.addEventListener("click", () => {
-    sideMenu.classList.remove("active");
-  });
-
   // --- Lógica do Modal de Categorias ---
-  const registerCategoryLink = document.getElementById(
-    "register-category-link",
-  );
   const categoryModal = document.getElementById("category-modal");
   const closeModalBtn = document.querySelector(".close-modal-btn");
   const saveCategoryBtn = document.getElementById("save-category-btn");
   const newCategoryInput = document.getElementById("new-category-input");
-
-  // Abrir modal ao clicar no link do menu
-  registerCategoryLink.addEventListener("click", (e) => {
-    e.preventDefault();
-    categoryModal.style.display = "block";
-    sideMenu.classList.remove("active"); // Fecha o menu lateral
-  });
 
   // Fechar modal
   closeModalBtn.addEventListener("click", () => {
@@ -298,5 +275,45 @@ document.addEventListener("DOMContentLoaded", () => {
     alert("Empresa cadastrada com sucesso!");
     registrationPage.classList.remove("active");
     businessForm.reset(); // Limpa o formulário
+  });
+
+  // --- Lógica do Filtro de Localização (CEP/Região) ---
+  const locationFilterBtn = document.getElementById("location-filter-btn");
+  const locationModal = document.getElementById("location-modal");
+  const closeLocationBtn = document.getElementById("close-location-btn");
+  const saveLocationBtn = document.getElementById("save-location-btn");
+  const locCepInput = document.getElementById("loc-cep");
+  const locStateInput = document.getElementById("loc-state");
+
+  // Abrir modal
+  locationFilterBtn.addEventListener("click", () => {
+    locationModal.style.display = "block";
+  });
+
+  // Fechar modal
+  closeLocationBtn.addEventListener("click", () => {
+    locationModal.style.display = "none";
+  });
+
+  // Fechar ao clicar fora do modal
+  window.addEventListener("click", (e) => {
+    if (e.target == locationModal) {
+      locationModal.style.display = "none";
+    }
+  });
+
+  // Salvar e aplicar filtro
+  saveLocationBtn.addEventListener("click", () => {
+    const cep = locCepInput.value.trim();
+    const state = locStateInput.value.trim().toUpperCase();
+
+    if (cep && state) {
+      locationFilterBtn.textContent = `📍 5km de ${cep} (${state})`;
+      locationFilterBtn.classList.add("active");
+      locationModal.style.display = "none";
+      alert(`Região definida: Raio de 5km ao redor de ${cep} - ${state}`);
+    } else {
+      alert("Por favor, preencha o CEP e o Estado.");
+    }
   });
 });

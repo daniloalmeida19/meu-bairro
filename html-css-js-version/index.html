@@ -8,22 +8,8 @@
   </head>
   <body>
     <div class="container">
-      <!-- Menu Lateral -->
-      <div class="side-menu">
-        <div class="side-menu-header">
-          <h2 class="side-menu-title">Menu</h2>
-          <button class="close-menu-btn">&times;</button>
-        </div>
-        <div class="side-menu-content">
-          <a href="#" class="menu-item" id="register-category-link"
-            >Registrar Categorias</a
-          >
-        </div>
-      </div>
-
       <header>
         <div class="header-top">
-          <button class="menu-btn">☰</button>
           <h1>Meu Bairro</h1>
           <button class="chat-btn">💬</button>
         </div>
@@ -56,7 +42,9 @@
         </div>
 
         <div class="commerce-filters">
-          <button class="filter-btn">📍 2km do meu CEP</button>
+          <button class="filter-btn" id="location-filter-btn">
+            📍 Definir Região (5km)
+          </button>
           <!-- Botões de filtro serão inseridos aqui -->
         </div>
 
@@ -188,6 +176,34 @@
             Concluir Cadastro
           </button>
         </form>
+      </div>
+    </div>
+
+    <!-- Modal de Localização (CEP/Região) -->
+    <div id="location-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal-btn" id="close-location-btn">&times;</span>
+        <h3>Definir Região</h3>
+        <div class="form-group">
+          <label for="loc-cep">CEP da Região</label>
+          <input
+            type="text"
+            id="loc-cep"
+            placeholder="00000-000"
+            class="modal-input"
+          />
+        </div>
+        <div class="form-group">
+          <label for="loc-state">Estado (UF)</label>
+          <input
+            type="text"
+            id="loc-state"
+            placeholder="Ex: SP"
+            class="modal-input"
+            maxlength="2"
+          />
+        </div>
+        <button id="save-location-btn">Aplicar Raio de 5km</button>
       </div>
     </div>
 
