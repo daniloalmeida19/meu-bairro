@@ -515,3 +515,23 @@ footer {
 .submit-registration-btn:hover {
   background-color: #218838;
 }
+
+.login-link-wrapper {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.login-link-wrapper p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+#back-to-login-btn {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+}

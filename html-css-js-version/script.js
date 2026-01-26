@@ -165,12 +165,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Lógica do Modal de Categorias ---
   const categoryModal = document.getElementById("category-modal");
-  const closeModalBtn = document.querySelector(".close-modal-btn");
+  const closeCategoryModalBtn = document.getElementById("close-category-btn");
   const saveCategoryBtn = document.getElementById("save-category-btn");
   const newCategoryInput = document.getElementById("new-category-input");
 
   // Fechar modal
-  closeModalBtn.addEventListener("click", () => {
+  closeCategoryModalBtn.addEventListener("click", () => {
     categoryModal.style.display = "none";
   });
 
@@ -184,13 +184,35 @@ document.addEventListener("DOMContentLoaded", () => {
   // Salvar nova categoria
   saveCategoryBtn.addEventListener("click", () => {
     const categoryName = newCategoryInput.value.trim();
-    if (categoryName) {
-      alert(`Categoria "${categoryName}" registrada com sucesso!`);
-      newCategoryInput.value = ""; // Limpa o campo
-      categoryModal.style.display = "none"; // Fecha o modal
-      // Aqui você poderia adicionar lógica para atualizar a lista de filtros, se desejar
-    } else {
+    if (!categoryName) {
       alert("Por favor, digite um nome para a categoria.");
+      return;
+    }
+
+    const regCategoryList = document.getElementById("reg-category-list");
+    const existingCategories = [...regCategoryList.options].map((opt) =>
+      opt.value.toLowerCase(),
+    );
+
+    if (existingCategories.includes(categoryName.toLowerCase())) {
+      alert(`A categoria "${categoryName}" já existe.`);
+    } else {
+      // Adiciona à lista de sugestões do formulário
+      const option = document.createElement("option");
+      option.value = categoryName;
+      regCategoryList.appendChild(option);
+
+      // Adiciona ao botão de filtro na página principal
+      const newFilterBtn = document.createElement("button");
+      newFilterBtn.className = "filter-btn";
+      newFilterBtn.dataset.category = categoryName;
+      newFilterBtn.textContent = categoryName;
+      commerceFiltersContainer.appendChild(newFilterBtn);
+
+      document.getElementById("reg-category").value = categoryName; // Preenche o campo
+      newCategoryInput.value = ""; // Limpa o modal
+      categoryModal.style.display = "none"; // Fecha o modal
+      alert(`Categoria "${categoryName}" adicionada com sucesso!`);
     }
   });
 
@@ -204,6 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   const businessForm = document.getElementById("business-form");
   const regCategoryList = document.getElementById("reg-category-list");
+  const addNewCategoryBtn = document.getElementById("add-new-category-btn");
   const regPhoneInput = document.getElementById("reg-phone");
   const regCommercialPhoneInput = document.getElementById(
     "reg-commercial-phone",
@@ -252,6 +275,11 @@ document.addEventListener("DOMContentLoaded", () => {
     registrationPage.classList.add("active");
   });
 
+  // Abrir modal para nova categoria a partir do formulário de cadastro
+  addNewCategoryBtn.addEventListener("click", () => {
+    categoryModal.style.display = "block";
+  });
+
   // Fechar página de cadastro (Voltar)
   closeRegistrationBtn.addEventListener("click", () => {
     registrationPage.classList.remove("active");
@@ -275,6 +303,25 @@ document.addEventListener("DOMContentLoaded", () => {
     alert("Empresa cadastrada com sucesso!");
     registrationPage.classList.remove("active");
     businessForm.reset(); // Limpa o formulário
+  });
+
+  // --- Lógica do Botão de Login (Header) ---
+  const loginBtn = document.getElementById("login-btn");
+  loginBtn.addEventListener("click", () => {
+    const emailInput = document.querySelector('.header-login input[type="text"]');
+    const passwordInput = document.querySelector('.header-login input[type="password"]');
+
+    if (emailInput.value && passwordInput.value) {
+      alert(`Login simulado para: ${emailInput.value}`);
+    } else {
+      alert("Por favor, preencha e-mail e senha para entrar.");
+    }
+  });
+
+  // --- Botão "Já tem conta? Entrar" no Cadastro ---
+  const backToLoginBtn = document.getElementById("back-to-login-btn");
+  backToLoginBtn.addEventListener("click", () => {
+    registrationPage.classList.remove("active");
   });
 
   // --- Lógica do Filtro de Localização (CEP/Região) ---

@@ -20,6 +20,7 @@
             class="login-input"
           />
           <input type="password" placeholder="Senha" class="login-input" />
+          <button class="login-btn" id="login-btn">Entrar</button>
           <a href="#" class="forgot-password">Esqueci a senha</a>
           <button class="register-btn">Cadastrar sua empresa</button>
         </div>
@@ -105,13 +106,18 @@
           </div>
           <div class="form-group">
             <label for="reg-category">Categoria</label>
-            <input
-              type="text"
-              id="reg-category"
-              list="reg-category-list"
-              placeholder="Selecione ou digite a categoria"
-              required
-            />
+            <div class="category-input-group">
+              <input
+                type="text"
+                id="reg-category"
+                list="reg-category-list"
+                placeholder="Selecione ou digite"
+                required
+              />
+              <button type="button" id="add-new-category-btn" class="add-category-btn">
+                Outra?
+              </button>
+            </div>
             <datalist id="reg-category-list">
               <!-- Opções preenchidas via JS -->
             </datalist>
@@ -175,6 +181,9 @@
           <button type="submit" class="submit-registration-btn">
             Concluir Cadastro
           </button>
+          <div class="login-link-wrapper">
+            <p>Já tem uma conta? <button type="button" id="back-to-login-btn">Entrar</button></p>
+          </div>
         </form>
       </div>
     </div>
@@ -210,7 +219,7 @@
     <!-- Modal de Cadastro de Categoria -->
     <div id="category-modal" class="modal">
       <div class="modal-content">
-        <span class="close-modal-btn">&times;</span>
+        <span class="close-modal-btn" id="close-category-btn">&times;</span>
         <h3>Nova Categoria</h3>
         <input
           type="text"
