@@ -66,7 +66,7 @@
           <a href="#" class="nav-item">♡</a>
           <a href="#" class="nav-item add-btn">+</a>
           <a href="#" class="nav-item">🛍️</a>
-          <a href="#" class="nav-item">👤</a>
+          <a href="#" class="nav-item" id="profile-nav-btn">👤</a>
         </nav>
       </footer>
 
@@ -114,7 +114,11 @@
                 placeholder="Selecione ou digite"
                 required
               />
-              <button type="button" id="add-new-category-btn" class="add-category-btn">
+              <button
+                type="button"
+                id="add-new-category-btn"
+                class="add-category-btn"
+              >
                 Outra?
               </button>
             </div>
@@ -182,9 +186,58 @@
             Concluir Cadastro
           </button>
           <div class="login-link-wrapper">
-            <p>Já tem uma conta? <button type="button" id="back-to-login-btn">Entrar</button></p>
+            <p>
+              Já tem uma conta?
+              <button type="button" id="back-to-login-btn">Entrar</button>
+            </p>
           </div>
         </form>
+      </div>
+
+      <!-- Página de Perfil (Inicialmente oculta) -->
+      <div id="profile-page" class="registration-page">
+        <div class="registration-header">
+          <button id="close-profile-btn">← Voltar</button>
+          <h2>Meu Perfil e Empresa</h2>
+        </div>
+        <div id="profile-content">
+          <section class="profile-section">
+            <h3>Minha Conta</h3>
+            <div class="form-group">
+              <label>E-mail:</label>
+              <p id="profile-email">Não conectado</p>
+            </div>
+          </section>
+
+          <section class="profile-section">
+            <h3>Minha Empresa</h3>
+            <div class="form-group">
+              <label>Nome da Empresa:</label>
+              <p id="profile-business-name">-</p>
+            </div>
+            <div class="form-group">
+              <label>Categoria:</label>
+              <p id="profile-business-category">-</p>
+            </div>
+            <div class="form-group">
+              <label>Celular / WhatsApp:</label>
+              <p id="profile-business-phone">-</p>
+            </div>
+          </section>
+
+          <section class="profile-section">
+            <h3>Fotos do que faço</h3>
+            <div class="photo-gallery" id="profile-photo-gallery">
+              <!-- Fotos serão adicionadas aqui -->
+            </div>
+            <input
+              type="file"
+              id="add-photo-input"
+              accept="image/*"
+              style="margin-top: 16px"
+            />
+          </section>
+        </div>
       </div>
     </div>
 

@@ -535,3 +535,47 @@ footer {
   cursor: pointer;
   text-decoration: underline;
 }
+
+/* Estilos para a Página de Perfil */
+#profile-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex-grow: 1;
+}
+
+.profile-section h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px;
+}
+
+.profile-section p {
+  font-size: 16px;
+  color: #333;
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 0;
+  word-wrap: break-word;
+}
+
+.photo-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.photo-item {
+  width: 100%;
+  padding-top: 100%; /* Aspect ratio 1:1 */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}

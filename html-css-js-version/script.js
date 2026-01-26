@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   // --- Dados e Lógica para as Publicações da Comunidade ---
+
+  // Simula um usuário logado/cadastrado. Será preenchido no login ou cadastro.
+  let currentUser = null;
   const postsData = [
     /* ... dados dos posts ... */
   ];
@@ -232,6 +235,26 @@ document.addEventListener("DOMContentLoaded", () => {
     "reg-commercial-phone",
   );
   const regNeighborhoodInput = document.getElementById("reg-neighborhood");
+  const profileNavBtn = document.getElementById("profile-nav-btn");
+  const profilePage = document.getElementById("profile-page");
+  const closeProfileBtn = document.getElementById("close-profile-btn");
+  const addPhotoInput = document.getElementById("add-photo-input");
+  const photoGallery = document.getElementById("profile-photo-gallery");
+  const profileEmail = document.getElementById("profile-email");
+  const profileBusinessName = document.getElementById("profile-business-name");
+  const profileBusinessCategory = document.getElementById(
+    "profile-business-category",
+  );
+  const profileBusinessPhone = document.getElementById(
+    "profile-business-phone",
+  );
+  const profileBusinessAddress = document.getElementById(
+    "profile-business-address",
+  );
+  const profileBusinessNeighborhood = document.getElementById(
+    "profile-business-neighborhood",
+  );
+  const profileBusinessZip = document.getElementById("profile-business-zip");
 
   // Máscara para telefone
   function maskPhone(e) {
@@ -300,19 +323,80 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    alert("Empresa cadastrada com sucesso!");
+    // Salva os dados do usuário e da empresa (simulação)
+    currentUser = {
+      email: document.getElementById("reg-email").value,
+      business: {
+        name: document.getElementById("reg-name").value,
+        category: document.getElementById("reg-category").value,
+        phone: document.getElementById("reg-phone").value,
+        street: document.getElementById("reg-street").value,
+        store: document.getElementById("reg-store").value,
+        neighborhood: document.getElementById("reg-neighborhood").value,
+        zip: document.getElementById("reg-zip").value,
+      },
+      photos: [], // Array para armazenar as URLs das fotos
+    };
+
+    // Adiciona a nova empresa à lista principal para que apareça na página inicial
+    const newBusiness = {
+      type: document.getElementById("reg-category").value,
+      name: document.getElementById("reg-name").value,
+      description: "Novo comércio no bairro!", // Descrição padrão
+      location: `${document.getElementById("reg-street").value}, ${
+        document.getElementById("reg-neighborhood").value
+      }`,
+      phone: document.getElementById("reg-phone").value,
+      whatsapp: `55${document.getElementById("reg-phone").value.replace(/\D/g, "")}`,
+      instagram: "", // O formulário de cadastro não pede o Instagram
+      mapLink: "#",
+      rating: 0, // Começa sem avaliação
+      votes: 0,
+    };
+    businessesData.unshift(newBusiness); // Adiciona no início da lista para ser mais visível
+
+    // Atualiza os filtros de categoria e a lista de comércios na página principal
+    setupFilters();
+    renderBusinesses(businessesData);
+
+    alert(
+      "Empresa cadastrada com sucesso! Agora você pode acessar seu perfil no ícone 👤.",
+    );
     registrationPage.classList.remove("active");
     businessForm.reset(); // Limpa o formulário
+
+    // Ativa o ícone do perfil para indicar que o usuário está "logado"
+    profileNavBtn.classList.add("active");
   });
 
   // --- Lógica do Botão de Login (Header) ---
   const loginBtn = document.getElementById("login-btn");
   loginBtn.addEventListener("click", () => {
-    const emailInput = document.querySelector('.header-login input[type="text"]');
-    const passwordInput = document.querySelector('.header-login input[type="password"]');
+    const emailInput = document.querySelector(
+      '.header-login input[type="text"]',
+    );
+    const passwordInput = document.querySelector(
+      '.header-login input[type="password"]',
+    );
 
     if (emailInput.value && passwordInput.value) {
-      alert(`Login simulado para: ${emailInput.value}`);
+      // Simula o login e define um usuário mock para teste
+      currentUser = {
+        email: emailInput.value,
+        business: {
+          name: "Pão de Ouro (Exemplo)",
+          category: "Padaria",
+          phone: "(11) 98765-4321",
+          street: "Rua das Flores",
+          store: "123",
+          neighborhood: "Jardim das Rosas",
+          zip: "01234-567",
+        },
+        photos: [],
+      };
+      alert(
+        `Login simulado para: ${currentUser.email}. Agora você pode acessar seu perfil no ícone 👤.`,
+      );
     } else {
       alert("Por favor, preencha e-mail e senha para entrar.");
     }
@@ -361,6 +445,74 @@ document.addEventListener("DOMContentLoaded", () => {
       alert(`Região definida: Raio de 5km ao redor de ${cep} - ${state}`);
     } else {
       alert("Por favor, preencha o CEP e o Estado.");
+    }
+  });
+
+  // --- Lógica da Página de Perfil ---
+
+  function populateProfilePage() {
+    if (currentUser) {
+      profileEmail.textContent = currentUser.email;
+      profileBusinessName.textContent = currentUser.business.name;
+      profileBusinessCategory.textContent = currentUser.business.category;
+      profileBusinessPhone.textContent = currentUser.business.phone;
+      const fullAddress = [
+        currentUser.business.street,
+        currentUser.business.store,
+      ]
+        .filter(Boolean)
+        .join(", ");
+      profileBusinessAddress.textContent = fullAddress || "-";
+      profileBusinessNeighborhood.textContent =
+        currentUser.business.neighborhood || "-";
+      profileBusinessZip.textContent = currentUser.business.zip || "-";
+
+      // Renderiza as fotos existentes
+      photoGallery.innerHTML = "";
+      currentUser.photos.forEach((photoSrc) => {
+        const photoDiv = document.createElement("div");
+        photoDiv.className = "photo-item";
+        photoDiv.style.backgroundImage = `url(${photoSrc})`;
+        photoGallery.appendChild(photoDiv);
+      });
+    }
+  }
+
+  // Abrir página de perfil
+  profileNavBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (!currentUser) {
+      alert("Você precisa se cadastrar ou fazer login para ver seu perfil.");
+      return;
+    }
+    populateProfilePage();
+    profilePage.classList.add("active");
+  });
+
+  // Fechar página de perfil
+  closeProfileBtn.addEventListener("click", () => {
+    profilePage.classList.remove("active");
+  });
+
+  // Lógica para adicionar fotos
+  addPhotoInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file && currentUser) {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const newPhotoSrc = event.target.result;
+
+        // Adiciona ao array de dados do usuário
+        currentUser.photos.push(newPhotoSrc);
+
+        // Adiciona à visualização da galeria na página
+        const photoDiv = document.createElement("div");
+        photoDiv.className = "photo-item";
+        photoDiv.style.backgroundImage = `url(${newPhotoSrc})`;
+        photoGallery.appendChild(photoDiv);
+      };
+      reader.readAsDataURL(file);
+      e.target.value = ""; // Limpa o input para permitir o upload do mesmo arquivo novamente
     }
   });
 });
