@@ -235,6 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "reg-commercial-phone",
   );
   const regNeighborhoodInput = document.getElementById("reg-neighborhood");
+  const headerLogin = document.querySelector(".header-login");
   const profileNavBtn = document.getElementById("profile-nav-btn");
   const profilePage = document.getElementById("profile-page");
   const closeProfileBtn = document.getElementById("close-profile-btn");
@@ -255,6 +256,15 @@ document.addEventListener("DOMContentLoaded", () => {
     "profile-business-neighborhood",
   );
   const profileBusinessZip = document.getElementById("profile-business-zip");
+
+  // --- Funções de UI ---
+  function updateHeaderUI() {
+    if (currentUser) {
+      headerLogin.style.display = "none";
+    } else {
+      headerLogin.style.display = "flex";
+    }
+  }
 
   // Máscara para telefone
   function maskPhone(e) {
@@ -367,6 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Ativa o ícone do perfil para indicar que o usuário está "logado"
     profileNavBtn.classList.add("active");
+    updateHeaderUI();
   });
 
   // --- Lógica do Botão de Login (Header) ---
@@ -397,6 +408,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alert(
         `Login simulado para: ${currentUser.email}. Agora você pode acessar seu perfil no ícone 👤.`,
       );
+      updateHeaderUI();
     } else {
       alert("Por favor, preencha e-mail e senha para entrar.");
     }
